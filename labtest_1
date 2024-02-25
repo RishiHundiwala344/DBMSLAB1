@@ -1,0 +1,127 @@
+create database mall_data;
+use mall_data;
+
+
+CREATE TABLE Mall (
+  mall_name VARCHAR(255) PRIMARY KEY,
+  building_no VARCHAR(255) NOT NULL,
+  street_no VARCHAR(255) NOT NULL,
+  city	 VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE Store_Owner (
+  owner_id INT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  house_no VARCHAR(255) NOT NULL,
+  street_no VARCHAR(255) NOT NULL,
+  city VARCHAR(255) NOT NULL,
+  phone VARCHAR(20) UNIQUE
+);
+
+CREATE TABLE Store_Manager(
+	name VARCHAR(255),
+	sm_aadhar INT PRIMARY KEY,
+	store_number INT UNIQUE NOT NULL,
+	salary INT NOT NULL
+);
+
+CREATE TABLE Store (
+  mall_name VARCHAR(255) NOT NULL,
+  store_no INT PRIMARY KEY,
+  store_name VARCHAR(255) NOT NULL,
+  room_no VARCHAR(255) NOT NULL,
+  owner_id INT NOT NULL,
+  sm_aadhar INT UNIQUE NOT NULL,
+  FOREIGN KEY (mall_name) REFERENCES Mall(mall_name),
+  FOREIGN KEY (owner_id) REFERENCES Store_Owner(owner_id),
+  FOREIGN KEY (sm_aadhar) REFERENCES Store_Manager(sm_aadhar)
+);
+CREATE TABLE Employee (
+  emp_aadhar INT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL,
+  manager_id INT
+);
+
+CREATE TABLE Department (
+  department_no INT PRIMARY KEY,
+  store_no INT NOT NULL,
+  name VARCHAR(255) NOT NULL,
+  FOREIGN KEY (store_no) REFERENCES Store(store_no)
+);
+
+CREATE TABLE dep_emp_lookup(
+	department_no INT,
+	emp_aadhar INT,
+	FOREIGN KEY (department_no) REFERENCES Department(department_no),
+	FOREIGN KEY (emp_aadhar) REFERENCES Employee(emp_aadhar)
+);
+
+INSERT INTO Mall VALUES 
+('Galleria', 1, 'MG Road', 'Bengaluru'),
+('Inorbit', 2, 'Brigade Rd', 'Bengaluru'),
+('Viviana', 3, 'Eastern Ex', 'Mumbai'),
+('Phoenix Marketcity', 4, 'DLF Cyber', 'Gurgaon'),
+('Oberoi Mall', 5, 'Bandra Kurla Complex', 'Mumbai');
+
+
+INSERT INTO Store_Owner VALUES 
+(1, 'Amit', 1, 'MG Road', 'Bengaluru', '111111111'),
+(2, 'Priyanka', 2, 'Brigade Rd', 'Bengaluru', '222222222'),
+(3, 'Rahul', 3, 'Linking Rd', 'Mumbai', '3333333333'),
+(4, 'Sunita', 4, 'DLF Cyber', 'Gurgaon', '4444444444'),
+(5, 'Neha', 5, 'Bandra Kurla', 'Mumbai', '5555555555');
+
+
+INSERT INTO Store_Manager VALUES 
+('Rohan Kumar', 1, 1, 50000),
+('Kiran Singh', 2, 2, 45000),
+('Maya Patel', 3, 3, 55000),
+('Deepak Malhotra', 4, 4, 48000),
+('Anjali Prasad', 5, 5, 52000);
+	
+INSERT INTO Store VALUES 
+('Galleria', 1, 'Fashion', 'A', 1, 1),
+('Inorbit', 2, 'Tech', 'B', 2, 2),
+('Viviana', 3, 'Books', 'C', 3, 3),
+('Phoenix Marketcity', 4, 'Sports', 'D', 4, 4),
+('Oberoi Mall', 5, 'Food Court', 'E', 5, 5);
+
+INSERT INTO Department VALUES 
+(1, 1, "Women's Clothing"),
+(2, 2, "Men's Clothing"),
+(3, 3, 'Electronics'),
+(4, 4, 'Home Appliances'),
+(5, 5, 'Fiction');
+       
+
+INSERT INTO Employee VALUES 
+(1, "Abhinav", NULL),
+(2, "Pranesh", NULL),
+(3, "Piyush", NULL),
+(4, "Tanush", NULL),
+(5, "Prajwal", NULL),
+(11, 'Rajesh', 1),
+(22, 'Priya', 2),
+(33, 'Vikram', 4),
+(44, 'Neha', 3),
+(55, 'Rohit', 5);
+
+
+INSERT INTO dep_emp_lookup VALUES  
+(1,1),
+(1, 11),
+(2,2),
+(2, 22),
+(3,3),
+(3, 33),
+(4,4),
+(4, 44),
+(5,5),
+(5, 55);
+
+
+
+
+
+
+
