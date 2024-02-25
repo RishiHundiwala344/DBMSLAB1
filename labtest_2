@@ -1,0 +1,119 @@
+-- Create Mall table
+CREATE TABLE Mall (
+    Mall_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Address VARCHAR(255)
+);
+
+-- Create Store table
+CREATE TABLE Store (
+    Store_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Location VARCHAR(255),
+    Owner_id INT,
+    Manager_id INT,
+    FOREIGN KEY (Owner_id) REFERENCES StoreOwner(Owner_id),
+    FOREIGN KEY (Manager_id) REFERENCES StoreManager(Manager_id)
+);
+
+-- Create Department table
+CREATE TABLE Department (
+    Department_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Store_id INT,
+    Manager_id INT,
+    FOREIGN KEY (Store_id) REFERENCES Store(Store_id),
+    FOREIGN KEY (Manager_id) REFERENCES DepartmentManager(Manager_id)
+);
+
+-- Create Employee table
+CREATE TABLE Employee (
+    Employee_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Aadhaar_number VARCHAR(12),
+    Department_id INT,
+    FOREIGN KEY (Department_id) REFERENCES Department(Department_id)
+);
+
+-- Create DepartmentManager table
+CREATE TABLE DepartmentManager (
+    Manager_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Store_id INT,
+    Department_id INT,
+    FOREIGN KEY (Store_id) REFERENCES Store(Store_id),
+    FOREIGN KEY (Department_id) REFERENCES Department(Department_id)
+);
+
+-- Create StoreManager table
+CREATE TABLE StoreManager (
+    Manager_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Store_id INT,
+    Salary DECIMAL(10, 2),
+    FOREIGN KEY (Store_id) REFERENCES Store(Store_id)
+);
+
+-- Create StoreOwner table
+CREATE TABLE StoreOwner (
+    Owner_id INT AUTO_INCREMENT PRIMARY KEY,
+    Name VARCHAR(255),
+    Address VARCHAR(255),
+    Office_phone VARCHAR(15)
+);
+
+-- Insert data into Mall table
+INSERT INTO Mall (Name, Address) VALUES 
+('Grand Mall 1', 'Address 1'),
+('Grand Mall 2', 'Address 2'),
+('Grand Mall 3', 'Address 3'),
+('Grand Mall 4', 'Address 4'),
+('Grand Mall 5', 'Address 5');
+
+-- Insert data into Store table
+INSERT INTO Store (Name, Location, Owner_id, Manager_id) VALUES 
+('Store 1', 'Location 1', 1, 1),
+('Store 2', 'Location 2', 2, 2),
+('Store 3', 'Location 3', 3, 3),
+('Store 4', 'Location 4', 4, 4),
+('Store 5', 'Location 5', 5, 5);
+
+-- Insert data into Department table
+INSERT INTO Department (Name, Store_id, Manager_id) VALUES 
+('Department 1', 1, 1),
+('Department 2', 2, 2),
+('Department 3', 3, 3),
+('Department 4', 4, 4),
+('Department 5', 5, 5);
+
+-- Insert data into Employee table
+INSERT INTO Employee (Name, Aadhaar_number, Department_id) VALUES 
+('Employee 1', '123456789012', 1),
+('Employee 2', '123456789013', 2),
+('Employee 3', '123456789014', 3),
+('Employee 4', '123456789015', 4),
+('Employee 5', '123456789016', 5);
+
+-- Insert data into DepartmentManager table
+INSERT INTO DepartmentManager (Name, Store_id, Department_id) VALUES 
+('Manager 1', 1, 1),
+('Manager 2', 2, 2),
+('Manager 3', 3, 3),
+('Manager 4', 4, 4),
+('Manager 5', 5, 5);
+
+-- Insert data into StoreManager table
+INSERT INTO StoreManager (Name, Store_id, Salary) VALUES 
+('Store Manager 1', 1, 50000),
+('Store Manager 2', 2, 55000),
+('Store Manager 3', 3, 60000),
+('Store Manager 4', 4, 65000),
+('Store Manager 5', 5, 70000);
+
+-- Insert data into StoreOwner table
+INSERT INTO StoreOwner (Name, Address, Office_phone) VALUES 
+('Owner 1', 'Owner Address 1', '1234567890'),
+('Owner 2', 'Owner Address 2', '1234567891'),
+('Owner 3', 'Owner Address 3', '1234567892'),
+('Owner 4', 'Owner Address 4', '1234567893'),
+('Owner 5', 'Owner Address 5', '1234567894');
